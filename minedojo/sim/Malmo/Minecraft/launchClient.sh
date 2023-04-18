@@ -116,7 +116,8 @@ if [ ! -e build/libs/MalmoMod-0.37.0-fat.jar ] || [ "$MINEDOJO_FORCE_BUILD" == "
     cmd="./gradlew runClient --stacktrace -Pjvm_debug_port=$jvm_debug_port -PrunDir=$runDir"
 else
 
-    export GRADLE_USER_HOME=${runDir}/gradle
+    #export GRADLE_USER_HOME=${runDir}/gradle
+    export GRADLE_USER_HOME=~/.gradle
     cd $runDir
     cmd="java -Dfml.coreMods.load=com.microsoft.Malmo.OverclockingPlugin -Xmx2G -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant -jar ../build/libs/MalmoMod-0.37.0-fat.jar"
 fi
