@@ -84,8 +84,10 @@ public class BiomeGeneratorImplementation extends HandlerBase implements IWorldG
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onBiomeGenInit(WorldTypeEvent.InitBiomeGens event) {
 		// Negative one is flag value for normal world gen
-		if (bparams.getBiome() == -1)
+		if (bparams.getBiome() == -1) {
+			event.setNewBiomeGens(event.getOriginalBiomeGens());
 			return;
+		}
 		GenLayer[] replacement = new GenLayer[2];
 		replacement[0] = new GenLayerConstant(bparams.getBiome());
 		replacement[1] = replacement[0];

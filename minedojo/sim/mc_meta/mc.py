@@ -751,6 +751,7 @@ def strip_item_prefix(minecraft_name):
 # _m indicates that the terrain is more mountainous
 # _f indicates that the terrain has trees where the base biome does not.
 BIOMES_MAP = {
+    "none": -1,
     "ice_plains": 12,
     "ice_plains_spikes": 140,
     "cold_taiga": 30,
