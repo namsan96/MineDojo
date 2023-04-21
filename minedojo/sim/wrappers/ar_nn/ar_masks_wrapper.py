@@ -19,12 +19,12 @@ class ARMasksWrapper(gym.ObservationWrapper):
         assert "nearby_tools" in env.observation_space.keys()
         assert "table" in env.observation_space["nearby_tools"].keys()
         assert "furnace" in env.observation_space["nearby_tools"].keys()
-        assert isinstance(
-            env.action_space, spaces.MultiDiscrete
-        ), "please use this wrapper with `NNActionSpaceWrapper!`"
-        assert (
-            len(env.action_space.nvec) == 8
-        ), "please use this wrapper with `NNActionSpaceWrapper!`"
+#        assert isinstance(
+#            env.action_space, spaces.MultiDiscrete
+#        ), "please use this wrapper with `NNActionSpaceWrapper!`"
+#        assert (
+#            len(env.action_space.nvec) == 8
+#        ), "please use this wrapper with `NNActionSpaceWrapper!`"
         super().__init__(env=env)
 
         action_categories_and_num_args = action_categories_and_num_args or dict(
