@@ -1,5 +1,6 @@
 import uuid
 from copy import deepcopy
+import socket
 from typing import Union, Optional, List, Dict, Tuple, Literal, Any
 
 import cv2
@@ -416,7 +417,15 @@ class MineDojoSim(gym.Env):
         episode_id = str(uuid.uuid4())
 
         xml = etree.fromstring(self._sim_spec.to_xml(episode_id))
-        raw_obs = self._bridge_env.reset(episode_id, [xml])[0]
+
+        try:
+            raw_obs = self._bridge_env.reset(episode_id, [xml])[0]
+        except socket.timeout:
+            # sometimes Minecraft goes into ERROR_TIMED_OUT_WAITING_FOR_EPISODE_PAUSE state
+            # IDK why but let's give one more chance
+            self._bridge_env.close()
+            self._bridge_env._instances = []
+            raw_obs = self._bridge_env.reset(episode_id, [xml])[0]
         obs, info = self._process_raw_obs(raw_obs)
         self._prev_obs, self._prev_info = deepcopy(obs), deepcopy(info)
         return obs
