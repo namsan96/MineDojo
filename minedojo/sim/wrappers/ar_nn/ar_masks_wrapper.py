@@ -149,5 +149,8 @@ class ARMasksWrapper(gym.ObservationWrapper):
         }
         # remove `full_stats`
         if "full_stats" in observation:
+            observation["damage_dealt"] = observation["full_stats"]['damage_dealt']
+            observation["damage_taken"] = observation["full_stats"]['damage_taken']
+            observation["mob_kills"] = observation["full_stats"]['mob_kills']
             del observation["full_stats"]
         return observation
