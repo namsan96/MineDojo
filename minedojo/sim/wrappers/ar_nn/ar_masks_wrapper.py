@@ -100,6 +100,14 @@ class ARMasksWrapper(gym.ObservationWrapper):
         craft_smelt_mask[-len(MC.ALL_SMELT_ITEMS_NN_ACTIONS) :] = np.logical_and(
             nearby_furnace, craft_smelt_mask[-len(MC.ALL_SMELT_ITEMS_NN_ACTIONS) :]
         )
+        
+        hand_craft_mask = craft_smelt_mask.copy()
+        hand_craft_mask[len(MC.ALL_HAND_CRAFT_ITEMS_NN_ACTIONS):] = False
+        hand_table_craft_mask = craft_smelt_mask.copy()
+        hand_table_craft_mask[-len(MC.ALL_SMELT_ITEMS_NN_ACTIONS):] = False
+        smelt_mask = craft_smelt_mask.copy()
+        smelt_mask[:-len(MC.ALL_SMELT_ITEMS_NN_ACTIONS)] = False
+        
         # ------ determine destroy mask ------
         # destroy mask is simply if slots are occupied
         destroy_mask = (observation["inventory"]["name"] != "air").astype(bool)
@@ -146,6 +154,9 @@ class ARMasksWrapper(gym.ObservationWrapper):
             "place": place_mask,
             "destroy": destroy_mask,
             "craft_smelt": craft_smelt_mask,
+            "hand_craft": hand_craft_mask,
+            "hand_table_craft": hand_table_craft_mask,
+            "smelt": smelt_mask,
         }
         # remove `full_stats`
         if "full_stats" in observation:
